@@ -1,0 +1,11 @@
+# Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
+v: 0
+micros:
+  - name: main
+    src: .
+    engine: custom
+    commands:
+      - cargo build --release
+    run: ./rusti
+    include:
+      - target/release/rusti
