@@ -6,6 +6,6 @@ micros:
     engine: custom
     commands:
       - cargo build --release
-    run: ./rusti
+    run: ./target/release/rusti
     include:
       - target/release/rusti
