@@ -1,10 +1,20 @@
 [package]
 name = "rusti"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-axum = "0.6.12"
-tokio = { version = "1.26.0", features = ["macros", "rt-multi-thread"] }
+# Disabling Axum default features speeds up the build time by 10%.
+axum = { version = "0.6.12", default-features = false, features = ["http1", "tokio"] }
+
+# Explicit use of pin-project 1.1+ makes Tower (used by Axum) use it, too. That uses syn crate
+# version 2 (instead of syn 1 used by pin-project 1.0). Why do it? Axum-core uses async-trait, which
+# uses syn 2. Using only one major version of syn speeds up the build time - again by 10%. Thanks to
+# https://github.com/tower-rs/tower/issues/742.
+pin-project = { version = "1.1" }
+
+# If using Tokio "macros" feature, then use version 1.29+. That uses tokio-macros 2.1+, which uses
+# syn 2.
+tokio = { version = "1.29.1", features = ["macros", "rt-multi-thread"] }
