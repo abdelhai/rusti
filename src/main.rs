@@ -1,10 +1,10 @@
-use axum::{routing::get, Router};
+use axum::{routing, Router};
 use std::env;
 
 #[tokio::main]
 async fn main() {
     // Build our application with a single route.
-    let app = Router::new().route("/", get(|| async { "Hello, Space!" }));
+    let app = Router::new().route("/", routing::get(|| async { "Hello, Space!" }));
     // Get the port to listen on from the environment, or default to 8080 if not present.
     let addr = format!(
         "127.0.0.1:{}",
